@@ -14,7 +14,7 @@ const photosDiv=document.getElementById("photosGallery");
 galleryPhotos.forEach(photo=>{
   const img=document.createElement("img");
   img.src=URL.createObjectURL(photo);
-  img.style.width="90%";
+  img.style.width="200px";
   img.style.margin="10px";
   photosDiv.appendChild(img);
 });
