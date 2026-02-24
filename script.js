@@ -8,7 +8,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particles = [];
-for(let i=0;i<120;i++){
+for(let i=0;i<150;i++){
   particles.push({
     x: Math.random()*canvas.width,
     y: Math.random()*canvas.height,
@@ -31,7 +31,7 @@ function drawParticles(){
 }
 drawParticles();
 
-// Hide overlay after 7s
+// Hide overlay after 7s and show main page
 setTimeout(()=>{
   introOverlay.style.display='none';
   mainPage.style.display='block';
@@ -48,7 +48,7 @@ function login(){
   } else { alert("Wrong Password"); }
 }
 
-// ==== Media Upload (temporary JS memory) ====
+// ==== Media Upload ====
 window.galleryPhotos = [];
 window.galleryVideos = [];
 
