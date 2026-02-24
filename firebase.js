@@ -17,23 +17,20 @@ import {
   increment 
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-
 // 🔐 Your Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyAR0ed_Xfvw6_hF21uwEU2NpO2-Cts_A0k",
   authDomain: "star-boys-1d890.firebaseapp.com",
   projectId: "star-boys-1d890",
-storageBucket: "star-boys-1d890.appspot.com"  ,
+  storageBucket: "star-boys-1d890.appspot.com", // ✅ fixed
   messagingSenderId: "718247990043",
   appId: "1:718247990043:web:d257a07140070d568b79be"
 };
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
 
 // 🔐 ADMIN LOGIN FUNCTION
 window.adminLogin = async function(email, password) {
@@ -46,13 +43,11 @@ window.adminLogin = async function(email, password) {
   }
 };
 
-
 // 🔐 LOGOUT
 window.adminLogout = async function() {
   await signOut(auth);
   alert("Logged out");
 };
-
 
 // 👀 Detect Admin State
 onAuthStateChanged(auth, (user) => {
@@ -64,7 +59,6 @@ onAuthStateChanged(auth, (user) => {
     if (adminPanel) adminPanel.style.display = "none";
   }
 });
-
 
 // 👥 VISITOR COUNTER FIXED
 async function updateVisitorCount() {
