@@ -1,4 +1,4 @@
-// Firebase Modular SDK (v12)
+6// Firebase Modular SDK (v12)
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import { 
@@ -61,21 +61,29 @@ onAuthStateChanged(auth, (user) => {
 });
 
 // 👥 VISITOR COUNTER FIXED
+// 👥 VISITOR COUNTER WITH ALERTS FOR MOBILE DEBUG
 async function updateVisitorCount() {
-  const counterRef = doc(db, "stats", "visitors");
-  const docSnap = await getDoc(counterRef);
+  try {
+    const counterRef = doc(db, "stats", "visitors");
+    const docSnap = await getDoc(counterRef);
 
-  if (!docSnap.exists()) {
-    // Document doesn't exist → create starting at 2000
-    await setDoc(counterRef, { count: 2000 });
-    document.getElementById("visitorCount").innerText = 2000;
-  } else {
-    // Document exists → increment by 1
-    const currentCount = docSnap.data().count || 2000;
-    await updateDoc(counterRef, {
-      count: increment(1)
-    });
-    document.getElementById("visitorCount").innerText = currentCount + 1;
+    if (!docSnap.exists()) {
+      // Document doesn't exist → create starting at 2000
+      await setDoc(counterRef, { count: 2000 });
+      document.getElementById("visitorCount").innerText = 2000;
+      alert("Document did not exist → created with count 2000 ✅");
+    } else {
+      // Document exists → increment by 1
+      const currentCount = docSnap.data().count || 2000;
+      await updateDoc(counterRef, {
+        count: increment(1)
+      });
+      document.getElementById("visitorCount").innerText = currentCount + 1;
+      alert("Visitor counter updated! Current count: " + (currentCount + 1));
+    }
+  } catch (error) {
+    alert("Error connecting to Firestore ❌ Check rules/config");
+    console.error(error);
   }
 }
 
