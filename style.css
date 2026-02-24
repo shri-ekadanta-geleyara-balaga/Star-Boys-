@@ -3,13 +3,12 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Cinzel', serif;
-  background: #000 url('logo.png') no-repeat center center;
-  background-size: cover;
+  background: #000;
   color: white;
   overflow-x: hidden;
 }
 
-/* Cinematic Intro Overlay */
+/* Cinematic Intro */
 #introOverlay {
   position: fixed;
   top:0; left:0;
@@ -21,6 +20,7 @@ body, html {
   align-items: center;
   z-index: 9999;
   overflow: hidden;
+  background: linear-gradient(135deg,#000,#111);
 }
 
 #introLogo {
@@ -38,7 +38,6 @@ body, html {
   animation: textFade 3s forwards 2s;
 }
 
-/* Particle Canvas */
 #particleCanvas {
   position: absolute;
   top:0;
@@ -48,7 +47,6 @@ body, html {
   z-index:0;
 }
 
-/* Animations */
 @keyframes logoZoom {
   from {opacity:0; transform:scale(0.5);}
   50% {opacity:1; transform:scale(1.2);}
@@ -65,6 +63,9 @@ body, html {
   display:none;
   text-align:center;
   padding:20px;
+  background: url('logo.png') no-repeat center center;
+  background-size: contain;
+  background-blend-mode: soft-light;
 }
 
 /* Top Right Admin Login */
@@ -153,4 +154,4 @@ button {
   margin-top:50px;
   font-size:1.2rem;
   color:#ffd700;
-  }
+    }
