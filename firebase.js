@@ -1,4 +1,4 @@
-6// Firebase Modular SDK (v12)
+// Firebase Modular SDK (v12)
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import { 
@@ -17,7 +17,8 @@ import {
   increment 
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-// 🔐 Your Firebase Config
+
+// 🔐 Correct Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyAR0ed_Xfvw6_hF21uwEU2NpO2-Cts_A0k",
   authDomain: "star-boys-1d890.firebaseapp.com",
@@ -32,6 +33,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+
 // 🔐 ADMIN LOGIN FUNCTION
 window.adminLogin = async function(email, password) {
   try {
@@ -43,11 +45,13 @@ window.adminLogin = async function(email, password) {
   }
 };
 
+
 // 🔐 LOGOUT
 window.adminLogout = async function() {
   await signOut(auth);
   alert("Logged out");
 };
+
 
 // 👀 Detect Admin State
 onAuthStateChanged(auth, (user) => {
@@ -60,8 +64,8 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// 👥 VISITOR COUNTER FIXED
-// 👥 VISITOR COUNTER WITH ALERTS FOR MOBILE DEBUG
+
+// 👥 VISITOR COUNTER FOR MOBILE + GITHUB PAGES
 async function updateVisitorCount() {
   try {
     const counterRef = doc(db, "stats", "visitors");
@@ -71,15 +75,13 @@ async function updateVisitorCount() {
       // Document doesn't exist → create starting at 2000
       await setDoc(counterRef, { count: 2000 });
       document.getElementById("visitorCount").innerText = 2000;
-      alert("Document did not exist → created with count 2000 ✅");
+      alert("Visitor document created ✅ Count set to 2000");
     } else {
       // Document exists → increment by 1
       const currentCount = docSnap.data().count || 2000;
-      await updateDoc(counterRef, {
-        count: increment(1)
-      });
+      await updateDoc(counterRef, { count: increment(1) });
       document.getElementById("visitorCount").innerText = currentCount + 1;
-      alert("Visitor counter updated! Current count: " + (currentCount + 1));
+      alert("Visitor counter updated ✅ Current count: " + (currentCount + 1));
     }
   } catch (error) {
     alert("Error connecting to Firestore ❌ Check rules/config");
