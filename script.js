@@ -1,36 +1,37 @@
-// Dark mode toggle
+import { auth } from './firebase.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+// Dark Mode
 const toggleBtn = document.getElementById('darkModeToggle');
-toggleBtn.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-});
+toggleBtn.addEventListener('click', () => document.body.classList.toggle('dark-mode'));
 
 // Countdown Timer
 const countdownDate = new Date("Sep 10, 2026 10:00:00").getTime();
-const daysEl = document.getElementById('days');
-const hoursEl = document.getElementById('hours');
-const minutesEl = document.getElementById('minutes');
-const secondsEl = document.getElementById('seconds');
-
 function updateCountdown() {
   const now = new Date().getTime();
   const distance = countdownDate - now;
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 *24)) / (1000*60*60));
-  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-  const seconds = Math.floor((distance % (1000*60)) / 1000);
-
-  daysEl.innerText = days;
-  hoursEl.innerText = hours;
-  minutesEl.innerText = minutes;
-  secondsEl.innerText = seconds;
+  if(distance<0) return;
+  document.getElementById('days').innerText = Math.floor(distance / (1000*60*60*24));
+  document.getElementById('hours').innerText = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+  document.getElementById('minutes').innerText = Math.floor((distance%(1000*60*60))/(1000*60));
+  document.getElementById('seconds').innerText = Math.floor((distance%(1000*60))/1000);
 }
-
-setInterval(updateCountdown, 1000);
 updateCountdown();
+setInterval(updateCountdown,1000);
 
-// Music Controls
+// Admin Panel Visibility
+const adminPanel = document.getElementById('admin-panel');
+onAuthStateChanged(auth, (user) => {
+  if(user && user.email==="santudilee123@gmail.com") {
+    adminPanel.style.display = "block";
+  } else {
+    adminPanel.style.display = "none";
+  }
+});
+
+// Music
 const bgMusic = document.getElementById('bgMusic');
-export function playMusic() { bgMusic.play(); }
-export function pauseMusic() { bgMusic.pause(); }
-export function deleteMusic() { bgMusic.pause(); bgMusic.src=""; }
+window.playMusic = () => bgMusic.play();
+window.pauseMusic = () => bgMusic.pause();
+window.deleteMusic = () => { bgMusic.pause(); bgMusic.src=""; };
