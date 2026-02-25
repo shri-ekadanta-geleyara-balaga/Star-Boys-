@@ -62,4 +62,9 @@ input,textarea{
   padding:8px;
   border-radius:5px;
   border:none;
-                   }
+}
+
+#photoContainer img, #videoContainer video{
+  margin:10px;
+  border-radius:10px;
+}
