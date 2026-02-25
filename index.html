@@ -4,69 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Star Boys Celebration</title>
-
-  <!-- Style -->
-  <link rel="stylesheet" href="css/style.css">
-
-  <!-- Particles -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.8.0/tsparticles.bundle.min.js"></script>
-
-  <!-- 3D tilt -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
-
+  <!-- Montserrat & Playfair Display Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Logo -->
-  <img id="logo" src="images/logo.png" alt="Star Boys Logo">
-
-  <!-- Particles container -->
-  <div id="particles-js"></div>
-
-  <!-- Dark Mode Toggle -->
-  <div id="darkModeToggle">
-    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
-  </div>
-
-  <!-- Admin Login Form -->
-  <div id="login-container">
-    <input type="email" id="adminEmail" placeholder="Admin Email">
-    <input type="password" id="adminPassword" placeholder="Password">
-    <button onclick="submitAdminLogin()">Login</button>
-  </div>
+  <!-- Logo & Header -->
+  <header>
+    <img src="images/logo.png" alt="Star Boys Logo" id="logo">
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+  </header>
 
   <!-- Admin Panel -->
-  <div id="admin-panel" style="display:none;">
-    <button onclick="adminLogout()">Logout</button><br><br>
-    <input type="file" id="uploadMusic" accept="audio/mp3">
-    <button onclick="uploadMusic()">Upload Music</button>
-    <button onclick="playMusic()">Play</button>
-    <button onclick="stopMusic()">Pause</button>
-    <button onclick="deleteMusic()">Delete</button>
+  <div id="admin-panel">
+    <h3>Admin Panel</h3>
+    <div>
+      <input type="file" id="musicUpload">
+      <button onclick="playMusic()">Play</button>
+      <button onclick="pauseMusic()">Pause</button>
+      <button onclick="deleteMusic()">Delete</button>
+    </div>
+    <div>
+      <textarea id="noticeInput"></textarea>
+      <button onclick="updateNotice()">Update Notice</button>
+    </div>
+    <button onclick="adminLogout()">Logout</button>
   </div>
 
   <!-- Main Content -->
-  <div id="main-content" class="tilt">
-    <div class="bento-grid">
-      <div class="bento-card" onclick="openPage('photos.html')">📁 Photos</div>
-      <div class="bento-card" onclick="openPage('videos.html')">📁 Videos</div>
+  <main>
+    <h1 id="festivalTitle">Happy Ganesha Chaturthi!</h1>
+    <p id="festivalSub">Celebrating 21 years of Star Boys</p>
+
+    <!-- Countdown Timer -->
+    <div id="countdown">
+      <span id="days">0</span> Days 
+      <span id="hours">0</span> Hours 
+      <span id="minutes">0</span> Minutes 
+      <span id="seconds">0</span> Seconds
     </div>
 
-    <p id="notice">Happy Ganesha Chaturthi! 🎉 Celebrating <span id="festivalYear">20</span> years of Star Boys!</p>
-    <p id="countdown"></p>
-    <p>Location: <a href="https://maps.app.goo.gl/cTQ3hXuNexsqx9vg6?g_st=aw" target="_blank">View on Google Maps</a></p>
-  </div>
+    <!-- Bento Grid -->
+    <div class="bento-grid">
+      <a href="photos.html" class="bento-item">Photos</a>
+      <a href="videos.html" class="bento-item">Videos</a>
+    </div>
 
-  <!-- Background Music -->
-  <audio id="bgMusic" loop>
-    <source src="music/default.mp3" type="audio/mpeg">
-  </audio>
+    <!-- Notice -->
+    <div id="noticeBoard">
+      <p id="noticeText">Grand Celebration Coming Soon!</p>
+    </div>
 
-  <!-- Firebase -->
+    <!-- Quick Links -->
+    <div class="quick-links">
+      <a href="https://www.instagram.com/shri_ekadanta_geleyara_balaga" target="_blank">Instagram</a>
+      <a href="#">Contact</a>
+      <a href="#">About</a>
+    </div>
+  </main>
+
+  <!-- Audio -->
+  <audio id="bgMusic" loop></audio>
+
+  <!-- Scripts -->
   <script type="module" src="js/firebase.js"></script>
-
-  <!-- Main App -->
   <script src="js/app.js"></script>
-
 </body>
 </html>
