@@ -1,34 +1,36 @@
-// 🎵 Music Control
-const music = document.getElementById('bgMusic');
-window.playMusic = () => { music.volume = 0.2; music.play(); };
-window.stopMusic = () => { music.pause(); };
-
-// 🌟 Particles Animation
-tsParticles.load("particles-js", {
-  fpsLimit: 60,
-  particles: {
-    number: { value: 50 },
-    color: { value: "#ffffff" },
-    shape: { type: "circle" },
-    opacity: { value: 0.3 },
-    size: { value: { min: 1, max: 3 } },
-    move: { enable: true, speed: 1, direction: "none", outModes: "out" }
-  },
-  interactivity: { events: { onHover: { enable: false }, onClick: { enable: false } } }
+// Dark mode toggle
+const toggleBtn = document.getElementById('darkModeToggle');
+toggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
 });
 
-// 🎉 Festival Year Counter
-function updateFestivalYear() {
-  const startYear = 2005;
-  const currentDate = new Date();
-  const festivalThisYear = new Date(currentDate.getFullYear(), 8, 10); // placeholder Sep 10
-  let yearCount = currentDate.getFullYear() - startYear + 1;
-  if (currentDate < festivalThisYear) yearCount -= 1;
-  document.getElementById("festivalYear").innerText = yearCount;
-}
-updateFestivalYear();
+// Countdown Timer
+const countdownDate = new Date("Sep 10, 2026 10:00:00").getTime();
+const daysEl = document.getElementById('days');
+const hoursEl = document.getElementById('hours');
+const minutesEl = document.getElementById('minutes');
+const secondsEl = document.getElementById('seconds');
 
-// 🌐 Open pages (Photos/Videos)
-window.openPage = function(page) {
-  window.location.href = page;
-};
+function updateCountdown() {
+  const now = new Date().getTime();
+  const distance = countdownDate - now;
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 *24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+  daysEl.innerText = days;
+  hoursEl.innerText = hours;
+  minutesEl.innerText = minutes;
+  secondsEl.innerText = seconds;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// Music Controls
+const bgMusic = document.getElementById('bgMusic');
+export function playMusic() { bgMusic.play(); }
+export function pauseMusic() { bgMusic.pause(); }
+export function deleteMusic() { bgMusic.pause(); bgMusic.src=""; }
