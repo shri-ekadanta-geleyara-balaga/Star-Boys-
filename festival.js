@@ -1,6 +1,6 @@
 import { uploadFile } from "./firebase.js";
+import { getStorage, ref, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-storage.js";
 
-/* ===== Timer ===== */
 const countdownDate = new Date("Sep 10, 2026 10:00:00").getTime();
 function updateCountdown(){
   const now = new Date().getTime();
@@ -17,18 +17,18 @@ function updateCountdown(){
 updateCountdown();
 setInterval(updateCountdown,1000);
 
-/* ===== Dark Mode ===== */
+/* Dark Mode */
 document.getElementById('darkModeToggle').addEventListener('click',()=>{
   document.body.classList.toggle('dark-mode');
 });
 
-/* ===== Music ===== */
+/* Music Controls */
 const bgMusic = document.getElementById('bgMusic');
 bgMusic.volume = 0.2;
 document.getElementById('playMusicBtn').addEventListener('click',()=>bgMusic.play());
 document.getElementById('pauseMusicBtn').addEventListener('click',()=>bgMusic.pause());
 
-/* ===== Admin Login ===== */
+/* Admin Login */
 document.getElementById('loginBtn').addEventListener('click',()=>{
   const email = document.getElementById('adminEmail').value;
   const password = document.getElementById('adminPassword').value;
@@ -46,7 +46,7 @@ document.getElementById('logoutBtn').addEventListener('click',()=>{
   document.getElementById('loginMessage').innerText='Logged out';
 });
 
-/* ===== Upload Music ===== */
+/* Upload Music */
 document.getElementById('uploadMusicBtn').addEventListener('click',async ()=>{
   const file = document.getElementById('musicUpload').files[0];
   if(file){
@@ -56,11 +56,45 @@ document.getElementById('uploadMusicBtn').addEventListener('click',async ()=>{
   }
 });
 
-/* ===== Upload Video ===== */
+/* Upload Video */
 document.getElementById('uploadVideoBtn').addEventListener('click',async ()=>{
   const file = document.getElementById('videoUpload').files[0];
   if(file){
     const url = await uploadFile(file,'videos');
     alert("Video uploaded ✅");
+    loadMediaGallery();
   }
 });
+
+/* Load all uploaded photos/videos */
+async function loadMediaGallery(){
+  const storage = getStorage();
+  const photoContainer = document.getElementById('photoContainer');
+  const videoContainer = document.getElementById('videoContainer');
+
+  const photoListRef = ref(storage,'photos/');
+  const videoListRef = ref(storage,'videos/');
+
+  photoContainer.innerHTML=''; videoContainer.innerHTML='';
+
+  const photos = await listAll(photoListRef);
+  for(const itemRef of photos.items){
+    const url = await getDownloadURL(itemRef);
+    const img = document.createElement('img');
+    img.src = url;
+    img.width = 200;
+    photoContainer.appendChild(img);
+  }
+
+  const videos = await listAll(videoListRef);
+  for(const itemRef of videos.items){
+    const url = await getDownloadURL(itemRef);
+    const video = document.createElement('video');
+    video.src = url;
+    video.controls = true;
+    video.width = 300;
+    videoContainer.appendChild(video);
+  }
+}
+
+loadMediaGallery();
