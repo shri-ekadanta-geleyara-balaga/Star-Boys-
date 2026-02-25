@@ -1,137 +1,61 @@
 body {
-  margin: 0;
   font-family: 'Montserrat', sans-serif;
-  background: #111;
+  margin: 0;
+  padding: 0;
+  background: #1a1a1a;
   color: #fff;
-  overflow-x: hidden;
-  position: relative;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
 }
 
 #logo {
-  height: 70px;
-}
-
-#darkModeToggle {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-}
-
-#admin-panel {
-  position: fixed;
-  top: 100px;
-  right: 10px;
-  background: rgba(0,0,0,0.85);
-  padding: 1rem;
-  border-radius: 10px;
-  display: none;
-  max-width: 250px;
-}
-
-main {
-  text-align: center;
-  padding: 2rem;
-  z-index: 2;
-  position: relative;
-}
-
-#festivalTitle {
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  margin: 0.5rem 0;
-}
-
-#festivalSub {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+  display: block;
+  margin: 20px auto;
+  max-width: 200px;
 }
 
 #countdown {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.bento-grid {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-.bento-item {
-  background: rgba(0,0,0,0.7);
-  padding: 2rem 3rem;
-  border-radius: 15px;
-  text-decoration: none;
-  color: #fff;
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-}
-
-.bento-item:hover {
-  transform: translateY(-5px);
-  background: rgba(255,215,0,0.1);
-  box-shadow: 0 10px 25px rgba(255,215,0,0.4);
-}
-
-.info-section {
-  margin: 2rem auto;
-  max-width: 700px;
-  background: rgba(255,255,255,0.05);
-  padding: 1rem 2rem;
-  border-radius: 15px;
-  text-align: left;
-}
-
-.info-section h2 {
-  font-family: 'Playfair Display', serif;
+  text-align: center;
   font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: #ffd700;
+  margin: 20px 0;
 }
 
-.info-section p {
-  font-size: 1.1rem;
+#about, #contact, #location, #payment {
+  padding: 20px;
+  text-align: center;
 }
 
-#noticeBoard {
-  margin: 2rem auto;
-  padding: 1rem;
-  max-width: 600px;
-  background: rgba(255,215,0,0.05);
+#darkModeToggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+#loginForm, #adminPanel {
+  width: 300px;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #fff;
   border-radius: 10px;
-  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.quick-links a {
-  margin: 0 1rem;
-  color: #ffd700;
-  text-decoration: none;
-  font-weight: bold;
+#loginForm input, #adminPanel textarea, #loginForm button, #adminPanel button {
+  width: 100%;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
 }
 
-.quick-links {
-  margin-top: 2rem;
-}
-
-.dark-mode {
-  background: #111;
-  color: #fff;
-}
-
-#particleCanvas {
+#particles {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
-  pointer-events: none;
+  z-index: -1;
 }
