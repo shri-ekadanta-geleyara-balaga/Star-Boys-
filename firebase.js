@@ -1,15 +1,18 @@
 // Firebase Modular SDK (v12)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, deleteObject } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-storage.js";
+import { 
+  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { 
+  getFirestore, doc, getDoc, setDoc, updateDoc 
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-// 🔐 Firebase Config
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyAR0ed_Xfvw6_hF21uwEU2NpO2-Cts_A0k",
   authDomain: "star-boys-1d890.firebaseapp.com",
   projectId: "star-boys-1d890",
-  storageBucket: "star-boys-1d890.appspot.com",
+  storageBucket: "star-boys-1d890.firebasestorage.app",
   messagingSenderId: "718247990043",
   appId: "1:718247990043:web:d257a07140070d568b79be"
 };
@@ -18,52 +21,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const storage = getStorage(app);
 
-// 🔐 ADMIN LOGIN
-window.adminLogin = async function(email, password) {
+// Admin Login & Logout
+window.adminLogin = async (email, password) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth,email,password);
     alert("Login successful ✅");
-  } catch (error) {
-    alert("Login failed ❌");
-    console.error(error);
-  }
+  } catch(e) { alert("Login failed ❌"); console.error(e);}
 };
 
-// 🔐 LOGOUT
-window.adminLogout = async function() {
+window.adminLogout = async () => {
   await signOut(auth);
   alert("Logged out");
 };
 
-// 👀 Detect Admin State
-onAuthStateChanged(auth, (user) => {
-  const adminPanel = document.getElementById("admin-panel");
-  if (user && user.email === "santudilee123@gmail.com") {
-    if (adminPanel) adminPanel.style.display = "block";
-  } else {
-    if (adminPanel) adminPanel.style.display = "none";
-  }
+// Detect admin
+onAuthStateChanged(auth,(user)=>{
+  const adminPanel = document.getElementById('admin-panel');
+  if(user && user.email==="santudilee123@gmail.com") adminPanel.style.display="block";
+  else adminPanel.style.display="none";
 });
 
-// 🎵 Upload Music to Firebase Storage
-window.uploadMusic = async function() {
-  const fileInput = document.getElementById('uploadMusic');
-  const file = fileInput.files[0];
-  if (!file) return alert("Select an MP3 file first!");
-
-  const musicRef = ref(storage, 'music/' + file.name);
-  await uploadBytes(musicRef, file);
-  document.getElementById('bgMusic').src = URL.createObjectURL(file);
-  alert("Music uploaded successfully ✅");
+// Notice update
+window.updateNotice = async () => {
+  const notice = document.getElementById('noticeInput').value;
+  await setDoc(doc(db,'settings','notice'), { text: notice });
+  document.getElementById('noticeText').innerText = notice;
 };
 
-// 🎵 Delete Music (resets default)
-window.deleteMusic = async function() {
-  const musicElement = document.getElementById('bgMusic');
-  musicElement.pause();
-  musicElement.currentTime = 0;
-  musicElement.src = "music/default.mp3";
-  alert("Music stopped/deleted ✅");
-};
+// Load notice on page
+async function loadNotice() {
+  const docSnap = await getDoc(doc(db,'settings','notice'));
+  if(docSnap.exists()) document.getElementById('noticeText').innerText = docSnap.data().text;
+}
+loadNotice();
